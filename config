@@ -1,0 +1,631 @@
+######################################################################################################################################################
+##################################                   i3wm.config July 10, 2023 12:13 pm                 ###########################################
+###################################################################################################################################################### 
+
+exec_always --no-startup-id xrandr --output $PrimaryDisplay --mode $PrimaryDisplayResolution --rate $PrimaryDisplayRate
+
+#################   choose the font    ###############################################################################################################              
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# choose your font
+
+#font pango: Noto Sans Myanmar UI 11.0
+#font pango: Decker 11.0
+#font pango: Droid Sans Regular 9
+font pango: JetBrains Mono Nerd Font 10.5
+#font pango: Cantarell Regular 9
+#font pango: Caladea Regular 9.5
+#font pango: eurofurence regular 13.5
+#font pango: Cascadia Code Regular 10.0
+set $mod Mod4
+
+#This is setup for azerty
+set $up l
+set $down k
+set $left j
+set $right m
+
+workspace 1 output $firstMonitor
+workspace 2 output $firstMonitor
+workspace 3 output $firstMonitor
+workspace 4 output $firstMonitor
+workspace 5 output $firstMonitor
+workspace 6 output $firstMonitor
+workspace 7 output $firstMonitor
+workspace 8 output $firstMonitor
+workspace 9 output $firstMonitor
+workspace 10 output $firstMonitor
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1; workspace 1
+bindsym $mod+Shift+2 move container to workspace 2; workspace 2
+bindsym $mod+Shift+3 move container to workspace 3; workspace 3
+bindsym $mod+Shift+4 move container to workspace 4; workspace 4
+bindsym $mod+Shift+5 move container to workspace 5; workspace 5
+bindsym $mod+Shift+6 move container to workspace 6; workspace 6
+bindsym $mod+Shift+7 move container to workspace 7; workspace 7
+bindsym $mod+Shift+8 move container to workspace 8; workspace 8
+bindsym $mod+Shift+9 move container to workspace 9; workspace 9
+bindsym $mod+Shift+0 move container to workspace 10; workspace 10
+
+######################################################################################################################################################  
+
+# Autotiling
+exec_always --no-startup-id autotiling
+
+# picom
+exec_always --no-startup-id picom --config ~/.config/i3/picom.conf
+
+# polybar
+exec_always --no-startup-id killall polybar
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+# feh sets wallpaper
+# exec --no-startup-id feh --bg-fill /home/asifbe4/Backgrounds/433-background.jpg
+
+# clipman
+exec --no-startup-id xfce4-clipman
+
+# nitrogen
+#exec_always --no-startup-id nitrogen --restore &
+
+# audio-recorder
+# exec_always --no-startup-id audio-recorder
+
+# rofi
+# exec exo-open --launch exec ~/.config/rofi/launchers/type-1/launcher.sh
+
+# feh sets wallpaper reset
+exec --no-startup-id wal -R
+
+#########################################################  Authentication dialog   ################################################################### 
+
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
+
+exec --no-startup-id nm-applet
+
+exec --no-startup-id xfce4-power-manager
+
+exec --no-startup-id xfsettingsd &
+
+exec --no-startup-id radiotray-ng
+
+#############################################    how to exit, logoff, suspend, ######################################################################
+
+# Backup exit
+# Press ctrl+alt+x - check toolbar for next choices
+bindsym control+mod1+X mode "$mode_system"
+
+set $mode_system System (k) lock, (l) logout, (r) reboot, (s) shutdown
+mode "$mode_system" {
+    bindsym k exec --no-startup-id ~/.config/i3/scripts/i3exit.sh lock, mode "default"
+    bindsym l exec --no-startup-id ~/.config/i3/scripts/i3exit.sh logout, mode "default"
+    bindsym r exec --no-startup-id ~/.config/i3/scripts/i3exit.sh reboot, mode "default"
+    bindsym s exec --no-startup-id ~/.config/i3/scripts/i3exit.sh shutdown, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# ArcoLinux Logout
+bindsym $mod+Shift+e exec --no-startup-id archlinux-logout
+bindsym $mod+X exec --no-startup-id archlinux-logout
+
+########################################################## picom of i3wm  ############################################################################
+
+bindsym control+mod1+o exec --no-startup-id ~/.config/i3/scripts/picom-toggle.sh
+
+######################################################################################################################################################
+
+# Davinci
+bindsym shift+control+d exec --no-startup-id LD_PRELOAD="/usr/lib64/libglib-2.0.so" /opt/resolve/bin/resolve
+
+# Chromium
+bindsym mod1+F2 exec --no-startup-id google-chrome-stable %U
+#bindsym mod1+F2 exec --no-startup-id chromium %U
+
+# Audacious
+bindsym mod1+F10 exec --no-startup-id Audacious
+
+# start xfce-appfinder
+bindsym mod1+F3 exec --no-startup-id xfce4-appfinder
+
+# start xfce4-settings-manager
+bindsym control+Menu exec --no-startup-id xfce4-settings-manager
+
+# start rofi full
+#bindsym mod1+d exec --no-startup-id rofi -i -show drun -modi drun -show-icons -font "Noto Sans Myanmar UI 12"
+bindsym mod1+d exec ~/.config/rofi/launchers/type-1/launcher.sh
+
+bindsym shift+mod1+g exec --no-startup-id /opt/brave-bin/brave --profile-directory=Default --app-id=aifgoeojgolmfjakigkeiaidjmpjbcbi
+
+##################################################### exit i3 (logs you out of your X session)  ######################################################
+
+#xkill
+bindsym --release $mod+Escape exec xkill
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+##############################################################   main workspace   ####################################################################
+
+#workspace 1 related
+bindsym $mod+F1 exec --no-startup-id brave;focus
+
+#workspace 2 related
+bindsym $mod+F2 exec --no-startup-id thunar;focus
+
+#workspace 3 related
+bindsym $mod+F3 exec --no-startup-id gimp;focus
+
+#workspace 4 related
+bindsym $mod+F4 exec --no-startup-id inkscape;focus
+
+#workspace 5 related
+bindsym $mod+F5 exec --no-startup-id /home/asifbe4/Applications/krita-5.2.9-x86_64.AppImage;focus
+
+#workspace 6 related
+bindsym $mod+F6 exec --no-startup-id kodi;focus
+
+#workspace 7 related
+bindsym $mod+F7 exec --no-startup-id kdenlive;focus
+
+#workspace 8 related
+bindsym $mod+F8 exec --no-startup-id krita;focus
+
+#workspace 9 related
+bindsym $mod+F9 exec --no-startup-id thunderbird;focus
+
+#workspace 10 related
+bindsym $mod+F10 exec --no-startup-id audacious;focus
+
+#workspace 11 related
+bindsym $mod+F11 exec --no-startup-id spotify;focus
+
+#### Keys - Extra  ################################################################################################################################### 
+
+# conky
+bindsym $mod+c exec --no-startup-id conky-toggle
+bindsym $mod+control+c exec --no-startup-id killall conky
+bindsym control+mod1+Next exec --no-startup-id conky-rotate -n
+bindsym control+mod1+Prior exec --no-startup-id conky-rotate -p
+
+#start dmenu
+bindsym mod1+F1 exec --no-startup-id dmenu_run -i -nb '#2E3440' -nf '#868686' -sb '#F6CB42' -sf '#2E3440' -fn 'JetBrains Mono Nerd Font 10.5'
+
+#ArcoLinux Tweak Tool
+bindsym control+mod1+t exec --no-startup-id archlinux-tweak-tool
+
+#ArcoLinux Welcome App
+bindsym control+mod1+w exec --no-startup-id archlinux-welcome-app
+
+#System monitor
+bindsym control+Shift+Escape exec --no-startup-id xfce4-taskmanager;focus
+
+#Xfce4-terminal
+bindsym control+mod1+Enter --no-startup-id Xfce4-terminal;focus
+
+#nitrogen
+bindsym control+mod1+n exec --no-startup-id nitrogen;focus
+
+#Sublime Text
+bindsym mod1+m exec --no-startup-id subl;focus
+
+#darktable
+bindsym control+mod1+d exec --no-startup-id darktable;focus
+
+#blender
+bindsym control+mod1+b exec --no-startup-id blender;focus
+
+#catfish
+bindsym control+mod1+c exec --no-startup-id catfish;focus
+
+#chrome
+bindsym control+mod1+g exec --no-startup-id google-chrome-stable %U
+
+#sublime-text
+bindsym mod1+control+s exec --no-startup-id subl;
+
+#krita
+bindsym control+mod+k exec --no-startup-id krita;focus
+
+#radiotray
+bindsym control+mod1+r exec --no-startup-id radiotray-ng &
+
+#pavucontrol
+bindsym control+mod1+u exec --no-startup-id pavucontrol
+
+#start firefox
+bindsym control+mod1+f exec --no-startup-id ;focus
+
+#pamac-manager
+bindsym control+mod1+p exec --no-startup-id pamac-manager;focus
+
+#Virt-Manager
+bindsym mod1+v exec --no-startup-id virt-manager ;focus
+
+#bindsym mod1+v exec --no-startup-id mpv --player-operation-mode=pseudo-gui;focus
+
+#Vlc
+bindsym control+mod1+v exec --no-startup-id vlc;focus
+
+####  workspace placement  ###########################################################################################################################
+
+# Workspace 1 browser related
+assign [class="Brave"] → 1 
+assign [class="Google-Earth-Pro"] → 1
+
+# Workspace 2 file managers
+assign [class="Meld|Thunar|Code"] → 2
+assign [class="Alacritty|Subl|Geany"] → 2
+assign [class="Google-Chrome-Stable %U"] → 2
+
+# Workspace 3 Gimp
+assign [class="Nitrogen|Gimp"] → 3
+assign [class="Xfce4-Appfinder"] → 3
+assign [class="Rofi"] → 3
+
+# Workspace 4 Inkscape
+assign [class="Ristretto|Inkscape"] → 4
+assign [class="Xfce4-terminal"] → 4
+assign [class="Virt-Manager"] → 4
+
+# Workspace 5 Images and meld
+assign [class="Darktable"] → 5
+assign [class="krita"] → 5
+
+# Workspace 6 all video player related
+assign [class="Mvp|Vlc"] → 6
+assign [class="Kodi"] → 6
+assign [class="Lmms"] → 6
+
+# Workspace 7 video editing related
+assign [class="Blender|Natron"] → 7
+assign [class="Steam"] → 7
+assign [class="Transmission"] → 7
+
+# Workspace 8 related
+assign [class="kdenlive"] → 8
+assign [class="UE4Editor"] → 8
+
+# Workspace 9 Office clients
+assign [class="libreoffice"] → 9
+assign [class="Thunderbird"] → 9
+
+# Workspace 10 music related
+assign [class="SimpleScreenRecorder|g4music"] → 10
+assign [class="Spotify|Obs-Studios|Audacious"] → 10
+
+# Workspace default xfce4-appfinder
+assign [class="Xfce4-Appfinder"] →  0
+assign [class="ChatGPT"] → 0
+assign [class="LM_Studio"] → 0
+
+##### focus   ########################################################################################################################################
+
+for_window [class="Thunar"] focus
+for_window [class="Xfce4-Appfinder"] focus
+for_window [class="Blender"] focus
+for_window [class="Code"] focus
+for_window [class="Google-Chrome-Stable %U"] focus
+for_window [class="Chromium"] focus
+for_window [class="Brave"] focus
+for_window [class="ChatGPT"] focus
+for_window [class="Darktable"] focus
+for_window [class="Thunderbird"] focus
+for_window [class="Vlc"] focus
+for_window [class="Weather"] focus
+for_window [class="Kodi"] focus
+for_window [class="Krita"] focus
+for_window [class="Natron"] focus
+for_window [class="Gimp"] focus
+for_window [class="Inkscape"] focus
+for_window [class="Geany"] focus
+for_window [class="Audacious"] focus
+for_window [class="libreoffice"] focus
+for_window [class="Neovim"] focus
+for_window [class="Nitrogen"] focus
+for_window [class="kdenlive"] focus
+for_window [class="Mpv"] focus
+for_window [class="Obs"] focus
+for_window [class="Spotify"] focus
+for_window [class="Subl"] focus
+for_window [class="Alacritty"] focus
+for_window [class="Ristretto"] focus
+for_window [class="Transmission"] focus
+for_window [class="Virt-Manager"] focus
+for_window [class="Lmms"] focus
+for_window [class="Rofi"] focus
+for_window [class="LM_Studio"] focus
+
+##### floating programs  #############################################################################################################################
+  
+for_window [class="Transmission"] floating enable
+for_window [class="Thunderbird"] floating enable
+for_window [class="Blueberry.py"] floating enable
+for_window [class="Weather"] floating enable
+for_window [class="Galculator"] floating enable
+for_window [class="Gnome-disks"] floating enable
+for_window [class="G4music"] floating enable
+for_window [class="^Gnome-font-viewer$"] floating enable
+for_window [class="^Gpick$"] floating enable
+for_window [class="^Conkyzen.desktop"] floating enablee
+for_window [class="Font-manager"] floating enablee
+for_window [class="Pavucontrol"] floating enable
+for_window [class="^Xweather"] floating enable
+for_window [class="io.elementary.calendar"] floating enable
+for_window [class="^Chat-gpt"] floating enable
+for_window [class="^Mousepad"] floating enable
+for_window [class="^Spotify"] floating enable
+for_window [class="Nomacs"] floating enable
+for_window [class="Usb-creator-gtk"] floating enable
+for_window [class="^Vlc"] floating enable
+for_window [class="Mpv"] floating enable
+for_window [class="Pamac-Manager"] floating enable
+for_window [class="^Xfce4-Appfinder"] floating enable
+for_window [class="Xfce4-settings-manager"] floating enable
+for_window [class="Xfce4-taskmanager"] floating enable
+for_window [class="Gapplication launch org.gnome.Weather &"] floating enable
+
+for_window [instance="script-fu"] border normal
+for_window [instance='lock'] floating enable; focus floating
+
+for_window [title="Copying"] floating enable
+for_window [title="Deleting"] floating enable
+for_window [title="Moving"] floating enable
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="^Preferences$"] floating enable
+for_window [window_role="setup"] floating enable
+
+######################################################   floating windows   ##########################################################################
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+################# moving around workspaces         
+
+# next/previous workspace
+
+bindsym Mod1+Tab workspace next
+bindsym Mod1+Shift+Tab workspace prev
+
+# navigate workspaces next / previous
+bindsym Mod1+Ctrl+Right workspace next
+bindsym Mod1+Ctrl+Left workspace prev
+
+# switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+
+#################  Tiling parameters  ################            
+
+# orientation for new workspaces
+default_orientation horizontal
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+# Super + F in arcolinux is execute thunar
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+# qwerty/azerty issue for letter z
+bindsym $mod+s layout stacking
+bindsym $mod+z layout tabbed
+bindsym $mod+e layout toggle split
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+d focus child
+
+##### Resizing by ####################################################################################################################################
+
+# Resizing by 1
+bindsym $mod+Mod1+Ctrl+Left resize shrink width 15 px or 15 ppt
+bindsym $mod+Mod1+Ctrl+Down resize grow height 15 px or 15 ppt
+bindsym $mod+Mod1+Ctrl+up resize shrink height 15 px or 15 ppt
+bindsym $mod+Mod1+Ctrl+Right resize grow width 15 px or 15 ppt
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 10 px or 10 ppt
+        bindsym Down        resize grow height 10 px or 10 ppt
+        bindsym Up          resize shrink height 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or Mod1+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym Mod1+r mode "default"
+}
+
+bindsym Mod1+r mode "resize"
+
+#####  ScreenShots  ################################################################################################################################## 
+ 
+bindsym Print exec --no-startup-id scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'
+bindsym Control+Print exec --no-startup-id xfce4-screenshooter
+bindsym Control+Shift+Print exec --no-startup-id gnome-screenshot -i
+bindsym shift+Print exec --no-startup-id shutter
+
+####  audio volume   #################################################################################################################################
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id "amixer -D pulse sset Master '5%+'"
+bindsym XF86AudioLowerVolume exec --no-startup-id "amixer -D pulse sset Master '5%-'"
+bindsym XF86AudioMute exec --no-startup-id "amixer -D pulse set Master toggle"
+#https://github.com/acrisci/playerctl/
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+bindsym XF86AudioStop exec --no-startup-id playerctl stop
+
+
+#####  screen brightness   ###########################################################################################################################
+
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
+
+################# bar toggle                       
+
+# bar toggle, hide or show
+bindsym $mod+b bar mode toggle
+
+################# border control  ######################################################################################################################
+               
+# Border control
+hide_edge_borders both
+bindsym $mod+shift+b exec --no-startup-id i3-msg border toggle
+
+# changing border stylel
+bindsym $mod+t border normal
+bindsym $mod+y border pixel 1
+bindsym $mod+u border none
+
+# new_window pixel 1
+new_window normal
+# new_window none
+
+# new_float pixel 1
+new_float normal
+# new_float none
+
+################# Popups  control  ###################################################################################################################                
+
+# Popups during fullscreen mode
+popup_during_fullscreen smart
+
+################# i3color and  gaps  #################################################################################################################
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #FFFF00 #285577 #ffffff #001558   #272727
+client.focused_inactive #FFA500 #4D4D4D #BFBFBF #00386F   #4D4D4D
+client.unfocused        #333333 #222222 #888888 #292d2e   #2C2C2C
+client.urgent           #1E90FF #FF1EEE #ffffff #A52A2A   #1E90FF
+client.placeholder      #7F7F7F #0c0c0c #ffffff #4D4D4D   #0c0c0c
+
+client.background       #ffffff
+
+######################################################################################################################################################                  
+
+# Settings for I3 next gap git#383838
+# https://github.com/Airblader/i3/tree/gaps-next
+# delete or uncomment the following lines if you do not have it or do not
+# want it
+
+for_window [class="^.*"] border pixel 0
+gaps inner 2
+gaps outer 0
+# smart_gaps on
+# smart_borders on
+
+################# i3 gaps change ######################################                 
+
+set $mode_gaps Gaps: (o) outer, (i) inner
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# get the mouse out of the way with unclutter
+# exec --no-startup-id unclutter
