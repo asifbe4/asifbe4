@@ -14,7 +14,7 @@
 ;
 ;   The README contains a lot of information
 ;
-########################         🔱 POLYBAR September 23,2024 15:13 🔱           ###########################################################################
+########################         🔱 POLYBAR July 11,2025 15:13 🔱           ###########################################################################
 ############################################################################################################################################################
 
 [global/wm]
@@ -224,8 +224,8 @@ font-6 = "Symbols Nerd Font:size=10"
 font-7 = "Noto Sans Symbols2:size=10"
 font-8 = "SauceCodePro Nerd Font:size=10"
 
-modules-left = filesystem sep launcher1 sep i3 sep launcher xwindow sep
-; modules-left = filesystem sep cpu-coreload sep temperature sep memory
+modules-left = launcher1 sep temperature2 sep memory sep filesystem sep i3 sep launcher xwindow sep
+; modules-left = filesystem sep temperature sep cpu-coreload sep temperature sep memory
 ; modules-left = apps sep que sep rof sep wal sep sel sep 
 ; modules-center =
 ;modules-center = sep xwindow sep  
@@ -707,113 +707,6 @@ label-underline = ${xrdb:color2:#555}
 
 ############################################################################################################################################################
 
-[module/ewmh]
-type = internal/xworkspaces
-
-; Only show workspaces defined on the same output as the bar
-;
-; Useful if you want to show monitor specific workspaces
-; on different bars
-;
-; Default: false
-pin-workspaces = true
-
-; Groups workspaces by monitor. If set to false, workspaces are not grouped and
-; appear in the order provided by the WM
-; If set to false, cannot be used together with label-monitor
-; New in version 3.7.0
-; Default: true
-group-by-monitor = false
-
-; Create click handler used to focus desktop
-; Default: true
-enable-click = true
-
-; Create scroll handlers used to cycle desktops
-; Default: true
-enable-scroll = false
-
-; Reverse the scroll direction
-; Default: false
-; New in version 3.6.0
-reverse-scroll = true
-
-; icon-[0-9]+ = <desktop-name>;<icon>
-; Map desktop names to some icon. The icon is then available in the %icon% token
-; NOTE: The desktop name needs to match the name configured by the WM
-; You can get a list of the defined desktop names using:
-; $ xprop -root _NET_DESKTOP_NAMES
-; NOTE: Neither <desktop-name> nor <icon> can contain a semicolon (;)
-
-icon-0 = code;♚
-icon-1 = office;♛
-icon-2 = graphics;♜
-icon-3 = mail;♝
-icon-4 = web;♞
-icon-default = ♟
-
-; Available tags:
-;   <label-monitor>
-;   <label-state> - gets replaced with <label-(active|urgent|occupied|empty)>
-; Default: <label-state>
-format = <label-state>
-
-; Cannot be used if group-by-monitor is false
-; Available tokens:
-;   %name%
-; Default: %name%
-label-monitor = %name%
-
-; Used for the currently selected workspaces
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-;   %nwin% (New in version 3.6.0)
-; Default: %icon% %name%
-label-active = %icon% %name%
-label-active-foreground = #ffffff
-label-active-background = #3f3f3f
-label-active-underline = #fba922
-label-active-padding = 4
-
-; Used for workspaces at least one window
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-;   %nwin% (New in version 3.6.0)
-; Default: %icon% %name%
-label-occupied = %icon%
-label-occupied-underline = #555555
-
-; Used for workspaces containing a window that is demanding attention (has the
-; urgent bit set)
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-;   %nwin% (New in version 3.6.0)
-; Default: %icon% %name%
-label-urgent = %icon%
-label-urgent-foreground = #000000
-label-urgent-background = #bd2c40
-label-urgent-underline = #9b0a20
-label-urgent-padding = 4
-
-; Used for workspaces without windows
-; Available tokens:
-;   %name%
-;   %icon%
-;   %index%
-;   %nwin% (New in version 3.6.0)
-; Default: %icon% %name%
-label-empty = %icon%
-label-empty-foreground = #55
-label-empty-padding = 2
-
-############################################################################################################################################################
-
 [module/filesystem]
 ;https://github.com/jaagr/polybar/wiki/Module:-filesystem
 type = internal/fs
@@ -932,7 +825,7 @@ interval = 1204
 exec = echo " :"
 format-prefix = ""
 format-prefix-foreground = ${xrdb:color3:#222}
-click-left = exec gnome-calendar %U
+click-left = exec thunderbird %U
 ;click-right =
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
@@ -960,7 +853,7 @@ interval = 1
 exec = echo  ":Wal"
 format-prefix = " "
 format-prefix-foreground= ${xrdb:color5:#222}
-click-left = exec wal -i /home/asifbe4/Backgrounds/Wal-background500/ -e
+click-left = exec wal -i /home/asifbe4/Backgrounds/ -e
 click-right = wal -R
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
@@ -1049,7 +942,7 @@ interval = 1
 ;   %mb_total%
 label = %gb_used%
 format = <label>
-format-prefix = ":"
+format-prefix = ""
 format-prefix-foreground= #E6E6FA
 format-underline = ${xrdb:color6:#222}
 ;format-overline = #3b3a00
@@ -1180,7 +1073,7 @@ thermal-zone = 0
 ; to find path to desired file
 ; Default reverts to thermal zone setting
 
-# hwmon-path = /sys/devices/pci0000:00/0000:00:1b.0/0000:06:00.0/nvme/nvme0/hwmon3/temp1_input
+hwmon-path = /sys/class/thermal/thermal_zone3: INT3400 Thermal
 
 warn-temperature = 90
 format = <ramp><label>
@@ -1209,9 +1102,9 @@ interval = 2
 format-padding = 1
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-format-underline = #C1B93E
-format-prefix-foreground = #C1B93E
-label =  %output:0:150:%
+format-underline = ${xrdb:color5:#555}
+format-prefix-foreground = ${xrdb:color8:#555}
+label = %output:0:150:%
 
 ############################################################################################################################################################
 
@@ -1468,7 +1361,6 @@ enable-click = true
 enable-scroll = true
 reverse-scroll = true
 
-
 icon-0 = 1;
 icon-1 = 2;
 icon-2 = 3;
@@ -1494,7 +1386,6 @@ label-urgent-foreground = ${colors.foreground}
 label-urgent-background = ${colors.alert}
 label-urgent-underline = ${colors.alert}
 label-urgent-padding = 2
-
 
 label-empty = %index%
 label-empty-foreground = ${colors.foreground}
